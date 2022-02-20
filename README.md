@@ -8,11 +8,11 @@ Simple Project Manager
 
 - Get Projects
 - Add Project
-- Delete Project
+- Delete Project 
 
 ## Todo List
 
 Using JSON Placeholder API(https://jsonplaceholder.typicode.com/)
 
-- Todo List
+- Get Todo List
 - Display Completed
