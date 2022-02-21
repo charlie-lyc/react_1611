@@ -9,11 +9,11 @@ class AddProject extends React.Component {
     }
 
     constructor(props) {
-        super()
+        super(props)
         this.state = {
             newProject: {}
         }
-        // this.handleSubmit = this.handleSubmit.bind(this) // Bind < this > to < handleSubmit > Method
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
 
@@ -45,7 +45,8 @@ class AddProject extends React.Component {
         } else {
             await this.setState({
                 newProject: {
-                    id: uuidv4(), // Generate Universally Unique Identifier
+                    // Generate Universally Unique Identifier
+                    id: uuidv4(), 
                     title: event.target.title.value,
                     category: event.target.category.value
                 }
@@ -89,8 +90,7 @@ class AddProject extends React.Component {
         return (
             <div>
                 <h2>Add Project</h2>
-                {/* <form onSubmit={ this.handleSubmit }> */}
-                <form onSubmit={ this.handleSubmit.bind(this) }>
+                <form onSubmit={ this.handleSubmit }>
                     <div>
                         <label htmlFor="title">Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
                         <input type="text" name="title" />

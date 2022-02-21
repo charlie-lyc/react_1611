@@ -3,10 +3,15 @@ import PropTypes from 'prop-types'
 
 class ProjectItem extends React.Component {
 
-    // handleClick() {
-    //     // console.log(this.props.project.id)
-    //     this.props.deleteProject(this.props.project.id)
-    // }
+    constructor(props) {
+        super(props)
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick() {
+        // console.log(this.props.project.id)
+        this.props.deleteProject(this.props.project.id)
+    }
     
     // render() {
     //     return (
@@ -20,8 +25,11 @@ class ProjectItem extends React.Component {
         return (
             <li >
                 <strong>{ this.props.project.title }</strong> - { this.props.project.category } &nbsp;
-                {/* <button onClick={ this.handleClick.bind(this) }>Delete</button> */}
-                <button onClick={ this.props.deleteProject.bind(this, this.props.project.id) }>Delete</button>
+
+                {/* Without Using 'handleClick' Method */}
+                {/* <button onClick={ this.props.deleteProject.bind(this, this.props.project.id) }>Delete</button> */}
+
+                <button onClick={ this.handleClick }>Delete</button>
                 <br />
                 <br />
             </li>

@@ -14,9 +14,9 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import Projects from './Components/Projects'
-import AddProject from './Components/AddProject'
-import Todos from './Components/Todos'
+import Projects from './components/Projects'
+import AddProject from './components/AddProject'
+import Todos from './components/Todos'
 
 /**********************************************/
 // class App extends React.Component {
@@ -33,8 +33,8 @@ import Todos from './Components/Todos'
 
 class App extends React.Component {
     
-    constructor() {
-        super() // Call Super Class Constructor Before Using this.state
+    constructor(props) {
+        super(props) // Call Super Class Constructor Before Using this.state
         this.state = {
             // Mockup Data
             projects: [
@@ -52,7 +52,9 @@ class App extends React.Component {
                 // }
             ]
         }
-        // this.addProject = this.addProject.bind(this)
+        /* Optimization of Binding Method for Less Performance Degradation */
+        this.handleAddProject = this.handleAddProject.bind(this)
+        this.handleDeleteProject = this.handleDeleteProject.bind(this) 
     }
 
     // Using Mock Data
@@ -80,8 +82,9 @@ class App extends React.Component {
         // console.log(this.state.projects)
         this.setState({
                 projects: [
-                    {
-                        id: uuidv4(), // Generate Universally Unique Identifier
+                    {   
+                        // Generate Universally Unique Identifier
+                        id: uuidv4(), 
                         title: 'Business Website',
                         category: 'Web Design'
                     },
@@ -107,7 +110,7 @@ class App extends React.Component {
         fetch('https://jsonplaceholder.typicode.com/todos')
             .then(res => res.json())
             .then(data => this.setState({ todos: data})) // Add todos to < this.state >
-            .then(() => console.log(this.state))
+            // .then(() => console.log(this.state))
     }       
 
     // Life Cycle Method
@@ -155,6 +158,16 @@ class App extends React.Component {
         ))
         // console.log(this.state.projects)
     }
+    ///////////////////////////////////////////////////////////////
+    // Using 'arrow function' without Binding < this > but ...
+    /* WARNING: This syntax is Experimental! */
+    // handleAddProject = async (project) => {
+    //     // console.log(this.state.projects)
+    //     await this.setState((prevState) => (
+    //         { projects: [ ...prevState.projects , project] }
+    //     ))
+    //     // console.log(this.state.projects)
+    // }
 
     async handleDeleteProject(id) {
         // console.log(this.state.projects)
@@ -168,9 +181,9 @@ class App extends React.Component {
         return (
             <div>
                 <h1>Project Manager</h1>
-                {/* <AddProject addProject={ this.addProject }/> */}
-                <AddProject addProject={ this.handleAddProject.bind(this) }/>
-                <Projects projects={ this.state.projects } deleteProject={ this.handleDeleteProject.bind(this) }/>
+                {/* <AddProject addProject={ this.handleAddProject.bind(this) }/> */}
+                <AddProject addProject={ this.handleAddProject }/>
+                <Projects projects={ this.state.projects } deleteProject={ this.handleDeleteProject }/>
                 <hr />
                 <Todos todos={ this.state.todos } />
             </div>
