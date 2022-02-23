@@ -3,19 +3,23 @@ import { v4 as uuidv4 } from 'uuid'
 import PropTypes from 'prop-types'
 
 class AddProject extends React.Component {
+
     // Set Values of < this.props > in Default
     static defaultProps = {
-        categories: ['Web Design', 'Web Development', 'Mobile Design', 'Mobile Development']
+        categories: ['- Select Category -', 'Web Design', 'Web Development', 'Mobile Design', 'Mobile Development']
     }
 
     constructor(props) {
         super(props)
         this.state = {
-            newProject: {}
+            // New Project
+            // id: '',
+            // title: '',
+            // category: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
-
 
     // handleSubmit(event) {
     //     // console.log('Submitted')
@@ -25,13 +29,11 @@ class AddProject extends React.Component {
     //     } else {
     //         // Asynchronous Execution
     //         this.setState({
-    //             newProject: {
-    //                 title: event.target.title.value,
-    //                 category: event.target.category.value
-    //             }
+    //             title: event.target.title.value,
+    //             category: event.target.category.value
     //         }, () => {
-    //             // console.log(this.state.newProject)
-    //             this.props.addProject(this.state.newProject)
+    //             // console.log(this.state)
+    //             this.props.addProject(this.state)
     //             event.target.title.value = ''
     //         })     
     //     }
@@ -40,23 +42,27 @@ class AddProject extends React.Component {
     // Using < async > and < await >
     async handleSubmit(event) {
         event.preventDefault()
-        if (event.target.title.value ===  '') {
-            alert('Project Title Is Required!')
+        if (event.target.title.value ===  '' || event.target.category.value === '- Select Category -') {
+            alert('Project Title and Category Is Required!')
         } else {
             await this.setState({
-                newProject: {
-                    // Generate Universally Unique Identifier
-                    id: uuidv4(), 
-                    title: event.target.title.value,
-                    category: event.target.category.value
-                }
+                // Generate Universally Unique Identifier
+                id: uuidv4(), 
+                title: event.target.title.value,
+                category: event.target.category.value
             })
-            // console.log(this.state.newProject)
-            this.props.addProject(this.state.newProject)
+            // console.log(this.state)
+            this.props.addProject(this.state)
             event.target.title.value = ''
+            event.target.category.value = event.target.category.options[0].value
         }
     }
 
+    async handleChange(event) {
+        await this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
 
     // render() {
     //     return (
@@ -93,12 +99,12 @@ class AddProject extends React.Component {
                 <form onSubmit={ this.handleSubmit }>
                     <div>
                         <label htmlFor="title">Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
-                        <input type="text" name="title" />
+                        <input type="text" name="title" onChange={ this.handleChange } value={ this.state.title } />
                     </div>
                     <br />
                     <div>
                         <label htmlFor="category">Category : </label>
-                        <select name="category">
+                        <select name="category" onChange={ this.handleChange }>
                             { categoryOptions }
                         </select>
                     </div>
@@ -113,7 +119,7 @@ class AddProject extends React.Component {
 
 // Set Values of < this.props > in Default
 // AddProject.defaultProps = {
-//     categories: ['Web Design', 'Web Development', 'Mobile Design', 'Mobile Development']
+//     categories: ['- Select Category -', 'Web Design', 'Web Development', 'Mobile Design', 'Mobile Development']
 // }
 
 // Type Checking
