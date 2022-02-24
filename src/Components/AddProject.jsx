@@ -39,7 +39,6 @@ class AddProject extends React.Component {
         }
     }
 
-    // Data Binding in One Way : Check < state > from 'React DevTools' Installed in Browser
     handleChange(event) {
         this.setState({
             [event.target.name]: event.target.value
