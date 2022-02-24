@@ -12,7 +12,7 @@ class AddProject extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            // New Project
+            // New Project Contents
             title: '',
             category: ''
         }
@@ -27,17 +27,15 @@ class AddProject extends React.Component {
         if (event.target.title.value ===  '' || event.target.category.value === '- Select Category -') {
             alert('Project Title Is Required!')
         } else {
-            this.setState({
+            const newProject = {
                 // Generate Universally Unique Identifier
                 id: uuidv4(), 
-                title: event.target.title.value,
-                category: event.target.category.value
-            }, () => {
-                // console.log(this.state)
-            })
-            this.props.addProject(this.state)
+                title: this.state.title,
+                category: this.state.category
+            }
+            this.props.addProject(newProject)
+            event.target.category.value = event.target.category.options[0].value
             event.target.title.value = ''
-            event.target.category.value = event.target.category.options[0].value    
         }
     }
 

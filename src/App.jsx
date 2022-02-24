@@ -123,7 +123,7 @@ class App extends React.Component {
          * setState((prevState, props) => state[, callback])
          */
         this.setState((prevState) => (
-            { projects: [ ...prevState.projects , project] }
+            { projects: [ project, ...prevState.projects] }
         ), () => {
             // console.log(this.state.projects)
         })
