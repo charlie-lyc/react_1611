@@ -5,6 +5,7 @@ class ProjectItem extends React.Component {
 
     constructor(props) {
         super(props)
+        /* Optimization of Binding Method for Increasing Performance */
         this.handleClick = this.handleClick.bind(this)
     }
 
@@ -26,7 +27,9 @@ class ProjectItem extends React.Component {
             <li >
                 <strong>{ this.props.project.title }</strong> - { this.props.project.category } &nbsp;
 
-                {/* Without Using 'handleClick' Method */}
+                {/* Not Recommended Without 'constructor()' and 'handleClick()' : Because of Performance Degradation */}
+                {/* <button onClick={ () => this.props.deleteProject(this.props.project.id) }>Delete</button> */}
+                {/* OR */}
                 {/* <button onClick={ this.props.deleteProject.bind(this, this.props.project.id) }>Delete</button> */}
 
                 <button onClick={ this.handleClick }>Delete</button>

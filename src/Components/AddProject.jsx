@@ -13,53 +13,37 @@ class AddProject extends React.Component {
         super(props)
         this.state = {
             // New Project
-            // id: '',
-            // title: '',
-            // category: ''
+            title: '',
+            category: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
     }
 
-    // handleSubmit(event) {
-    //     // console.log('Submitted')
-    //     event.preventDefault()// Prevent Default Behavior(Refresh Web Page)
-    //     if (event.target.title.value ===  '') {
-    //         alert('Project Title Is Required!')
-    //     } else {
-    //         // Asynchronous Execution
-    //         this.setState({
-    //             title: event.target.title.value,
-    //             category: event.target.category.value
-    //         }, () => {
-    //             // console.log(this.state)
-    //             this.props.addProject(this.state)
-    //             event.target.title.value = ''
-    //         })     
-    //     }
-    // }
-    ///////////////////////////////////////////////////////////////////////
-    // Using < async > and < await >
-    async handleSubmit(event) {
+    handleSubmit(event) {
+        // console.log(this.state)
+        // Prevent Default Behavior(Refresh Web Page)
         event.preventDefault()
         if (event.target.title.value ===  '' || event.target.category.value === '- Select Category -') {
-            alert('Project Title and Category Is Required!')
+            alert('Project Title Is Required!')
         } else {
-            await this.setState({
+            this.setState({
                 // Generate Universally Unique Identifier
                 id: uuidv4(), 
                 title: event.target.title.value,
                 category: event.target.category.value
+            }, () => {
+                // console.log(this.state)
             })
-            // console.log(this.state)
             this.props.addProject(this.state)
             event.target.title.value = ''
-            event.target.category.value = event.target.category.options[0].value
+            event.target.category.value = event.target.category.options[0].value    
         }
     }
 
-    async handleChange(event) {
-        await this.setState({
+    // Data Binding in One Way : Check < state > from 'React DevTools' Installed in Browser
+    handleChange(event) {
+        this.setState({
             [event.target.name]: event.target.value
         })
     }
@@ -99,7 +83,7 @@ class AddProject extends React.Component {
                 <form onSubmit={ this.handleSubmit }>
                     <div>
                         <label htmlFor="title">Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
-                        <input type="text" name="title" onChange={ this.handleChange } value={ this.state.title } />
+                        <input type="text" name="title" onChange={ this.handleChange } />
                     </div>
                     <br />
                     <div>

@@ -34,7 +34,8 @@ import Todos from './components/Todos'
 class App extends React.Component {
     
     constructor(props) {
-        super(props) // Call Super Class Constructor Before Using this.state
+        // Call Super Class Constructor Before Using < this.state >
+        super(props) 
         this.state = {
             // Mockup Data
             projects: [
@@ -50,138 +51,110 @@ class App extends React.Component {
                 //     title: 'E-commerce Shopping Cart',
                 //     category: 'Web Development'
                 // }
-            ]
+            ],
+            todos: []
         }
-        /* Optimization of Binding Method for Less Performance Degradation */
         this.handleAddProject = this.handleAddProject.bind(this)
         this.handleDeleteProject = this.handleDeleteProject.bind(this) 
     }
 
-    // Using Mock Data
+    // Add 'projects' to < this.state > Using Mock Data
     getProjects() {
         // console.log(this.state.projects)
-        // this.setState({
-        //     projects: [
-        //         {
-        //             title: 'Business Website',
-        //             category: 'Web Design'
-        //         },
-        //         {
-        //             title: 'Social App',
-        //             category: 'Mobile Development'
-        //         },
-        //         {
-        //             title: 'E-commerce Shopping Cart',
-        //             category: 'Web Development'
-        //         }
-        //     ]
-        // })
-        // console.log(this.state.projects)
-        /////////////////////////////////////////////////
-        // Asynchronous Execution
-        // console.log(this.state.projects)
         this.setState({
-                projects: [
-                    {   
-                        // Generate Universally Unique Identifier
-                        id: uuidv4(), 
-                        title: 'Business Website',
-                        category: 'Web Design'
-                    },
-                    {
-                        id: uuidv4(),
-                        title: 'Social App',
-                        category: 'Mobile Development'
-                    },
-                    {
-                        id: uuidv4(),
-                        title: 'E-commerce Shopping Cart',
-                        category: 'Web Development'
-                    }
-                ]
-            }, () => {
-                // console.log(this.state.projects)
-            }
-        )
+            projects: [
+                {   
+                    // Generate Universally Unique Identifier
+                    id: uuidv4(), 
+                    title: 'Business Website',
+                    category: 'Web Design'
+                },{
+                    id: uuidv4(),
+                    title: 'Social App',
+                    category: 'Mobile Development'
+                },{
+                    id: uuidv4(),
+                    title: 'E-commerce Shopping Cart',
+                    category: 'Web Development'
+                }
+            ]
+        }, () => {
+            // console.log(this.state.projects)
+        })
     }
 
-    // Using JSON Placeholder API
+    // Add 'todos' to < this.state > Fetching from JSON Placeholder API
     getTodos() {
+        // console.log(this.state.todos)
         fetch('https://jsonplaceholder.typicode.com/todos')
             .then(res => res.json())
-            .then(data => this.setState({ todos: data})) // Add todos to < this.state >
-            // .then(() => console.log(this.state))
+            .then(data => this.setState({ todos: data },() => { 
+                // console.log(this.state.todos)
+            }))
+
     }       
 
     // Life Cycle Method
     componentDidMount() {
         // Using Mock Data
         this.getProjects()
-        /////////////////////////////////////////////////
+        //////////////////////////////
         // Using JSON Placeholder API
         this.getTodos()
     }
 
-    // handleAddProject(project) {
-    //     console.log(this.state.projects)
-    //     ////////////////////////////////////////////////////////
-    //     // Update projects in < this.state >
-    //     // this.setState({
-    //     //     // projects: this.state.projects.push(project)
-    //     //     /* OR */
-    //     //     // projects: this.state.projects.concat(project)
-    //     //     /* OR */
-    //     //     projects: [ ...this.state.projects , project]
-    //     // })
-    //     // // console.log(this.state.projects)
-    //     ////////////////////////////////////////////////////////
-    //     // Asynchronous Execution 1
-    //     // this.setState({
-    //     //     projects: [ ...this.state.projects , project]
-    //     // }, () => {
-    //     //     console.log(this.state.projects)
-    //     // })
-    //     ////////////////////////////////////////////////////////
-    //     // Asynchronous Execution 2
+    handleAddProject(project) {
+        // console.log(this.state.projects)
+        ////////////////////////////////////////////////////////
+        /**
+         * setState(state[, callback])
+         */
+        // this.setState({
+        //     // projects: this.state.projects.push(project)
+        //     /* OR */
+        //     // projects: this.state.projects.concat(project)
+        //     /* OR */
+        //     projects: [ ...this.state.projects , project]
+        // }, () => {
+        //     // console.log(this.state.projects)
+        // })
+        ////////////////////////////////////////////////////////
+        /**
+         * setState((prevState, props) => state[, callback])
+         */
+        this.setState((prevState) => (
+            { projects: [ ...prevState.projects , project] }
+        ), () => {
+            // console.log(this.state.projects)
+        })
+    }
+    ///////////////////////////////////////////////////////////////
+    /**
+     * Using 'arrow function' without Binding to < this >, but Not Recommended!
+     * Because This Syntax Is Experimental! 
+     */
+    // handleAddProject = (project) => {
+    //     // console.log(this.state.projects)
     //     this.setState((prevState) => (
     //         { projects: [ ...prevState.projects , project] }
     //     ), () => {
-    //         console.log(this.state.projects)
+    //         // console.log(this.state.projects)
     //     })
     // }
-    ///////////////////////////////////////////////////////////////
-    // Using < async > and < await >
-    async handleAddProject(project) {
-        // console.log(this.state.projects)
-        await this.setState((prevState) => (
-            { projects: [ ...prevState.projects , project] }
-        ))
-        // console.log(this.state.projects)
-    }
-    ///////////////////////////////////////////////////////////////
-    // Using 'arrow function' without Binding < this > but ...
-    /* WARNING: This syntax is Experimental! */
-    // handleAddProject = async (project) => {
-    //     // console.log(this.state.projects)
-    //     await this.setState((prevState) => (
-    //         { projects: [ ...prevState.projects , project] }
-    //     ))
-    //     // console.log(this.state.projects)
-    // }
 
-    async handleDeleteProject(id) {
+    handleDeleteProject(id) {
         // console.log(this.state.projects)
-        await this.setState((prevState) => ({
-            projects: prevState.projects.filter(project => project.id !== id)
-        }))
-        // console.log(this.state.projects)
+        this.setState((prevState) => (
+            { projects: prevState.projects.filter(project => project.id !== id) }
+        ), () => {
+            // console.log(this.state.projects)
+        })
     }
 
     render() {
         return (
             <div>
                 <h1>Project Manager</h1>
-                {/* <AddProject addProject={ this.handleAddProject.bind(this) }/> */}
                 <AddProject addProject={ this.handleAddProject }/>
                 <Projects projects={ this.state.projects } deleteProject={ this.handleDeleteProject }/>
                 <hr />
