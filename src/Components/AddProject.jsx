@@ -105,8 +105,8 @@ class AddProject extends React.Component {
 
 // Type Checking
 AddProject.propTypes = {
-    categories: PropTypes.array,
-    addProject: PropTypes.func,
+    categories: PropTypes.array.isRequired,
+    addProject: PropTypes.func.isRequired,
 }
 
 export default AddProject

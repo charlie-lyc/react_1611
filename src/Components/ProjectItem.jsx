@@ -43,8 +43,8 @@ class ProjectItem extends React.Component {
 
 // Type Checking
 ProjectItem.propTypes = {
-    project: PropTypes.object,
-    deleteProject: PropTypes.func
+    project: PropTypes.object.isRequired,
+    deleteProject: PropTypes.func.isRequired
 }
 
 export default ProjectItem

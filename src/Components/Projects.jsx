@@ -63,8 +63,8 @@ class Projects extends React.Component {
 
 // Type Checking
 Projects.propTypes = {
-    projects: PropTypes.array,
-    deleteProject: PropTypes.func
+    projects: PropTypes.array.isRequired,
+    deleteProject: PropTypes.func.isRequired
 }
 
 export default Projects

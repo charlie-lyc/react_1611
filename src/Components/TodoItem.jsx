@@ -16,7 +16,7 @@ class TodoItem extends React.Component {
 
 // Type Checking
 TodoItem.propTypes = {
-    todo: PropTypes.object
+    todo: PropTypes.object.isRequired
 }
 
 export default TodoItem
