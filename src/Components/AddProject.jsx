@@ -25,7 +25,7 @@ class AddProject extends React.Component {
         // Prevent Default Behavior(Refresh Web Page)
         event.preventDefault()
         if (event.target.title.value ===  '' || event.target.category.value === '- Select Category -') {
-            alert('Project Title Is Required!')
+            alert('Project Title and Category Are Required!')
         } else {
             const newProject = {
                 // Generate Universally Unique Identifier
@@ -34,8 +34,12 @@ class AddProject extends React.Component {
                 category: this.state.category
             }
             this.props.addProject(newProject)
+            this.setState({
+                title: '',
+                category: ''
+            })
             event.target.category.value = event.target.category.options[0].value
-            event.target.title.value = ''
+
         }
     }
 
@@ -80,7 +84,7 @@ class AddProject extends React.Component {
                 <form onSubmit={ this.handleSubmit }>
                     <div>
                         <label htmlFor="title">Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
-                        <input type="text" name="title" onChange={ this.handleChange } />
+                        <input type="text" name="title" onChange={ this.handleChange } value={ this.state.title }/>
                     </div>
                     <br />
                     <div>
