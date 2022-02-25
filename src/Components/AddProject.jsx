@@ -39,7 +39,6 @@ class AddProject extends React.Component {
                 category: ''
             })
             event.target.category.value = event.target.category.options[0].value
-
         }
     }
 
