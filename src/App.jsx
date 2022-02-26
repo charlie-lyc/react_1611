@@ -110,8 +110,6 @@ class App extends React.Component {
          * setState(state[, callback])
          */
         // this.setState({
-        //     // projects: this.state.projects.push(project)
-        //     /* OR */
         //     // projects: this.state.projects.concat(project)
         //     /* OR */
         //     projects: [ ...this.state.projects , project]
