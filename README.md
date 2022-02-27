@@ -1,7 +1,8 @@
 # React
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
+Learning 'React' with building simple app.
 
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-- Learning 'React' with building simple app.
 
 ## Project Manager
 Building simple project manager.
